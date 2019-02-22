@@ -61,6 +61,8 @@
     <Compile Include="ToggleButton.xaml.cs">
       <DependentUpon>ToggleButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HotspotData.cs" />
+    <Compile Include="ValidationResult.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,7 +113,6 @@
     <Resource Include="Images\Wifi_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\New_icon.png" />
     <Resource Include="Images\Open_icon.png" />
     <Resource Include="Images\Save_icon.png" />
   </ItemGroup>

@@ -7,18 +7,12 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Wifi Hotspot" Height="500" Width="800" Icon="Images/Wifi_icon.ico"
-        >
+        Title="Wifi Hotspot" Height="500" Width="800" Icon="Images/Wifi_icon.ico">
 
     <DockPanel Background="#FF19338D">
         <Menu DockPanel.Dock="Top" Height="25">
-            <MenuItem  Header="_Main" FontSize="16" Height="25">
-                <MenuItem x:Name="ContextMenu" Header="_New configuration" Click="NewConfiguration_OnClick">
-                    <MenuItem.Icon>
-                        <Image Source="/Images/New_icon.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="_Open configuration" IsEnabled="{Binding Mode=TwoWay, Path=IsEnabledItem2}"> 
+            <MenuItem Header="_Main" FontSize="16" Height="25">
+                <MenuItem Header="_Open configuration" Click="OpenConfiguration_OnClick">
                     <MenuItem.Icon>
                         <Image Source="/Images/Open_icon.png" />
                     </MenuItem.Icon>

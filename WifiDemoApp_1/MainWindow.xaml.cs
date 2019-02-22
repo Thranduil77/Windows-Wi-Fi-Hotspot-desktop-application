@@ -1,12 +1,20 @@
 ﻿#region Using
 
+#endregion
+
+#region Using
+
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
+using Microsoft.Win32;
 
 #endregion
 
@@ -26,26 +34,10 @@ namespace WifiDemoApp_1
             CreateDispatcherTimer();
         }
 
-        private bool _iseditenabled = false;
-        public bool IsEnabledItem2
-        {
-            get
-            {
-                return _iseditenabled;
-                //return !string.IsNullOrEmpty(WirelessPasswordInput?.Text) &&
-                //       !string.IsNullOrEmpty(NetworkNameInput?.Text);
-            }
-            set { _iseditenabled = value; }
-        }
-
         private void CreateDispatcherTimer()
         {
             var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal,
-                delegate
-                {
-                    DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss");
-                    IsEnabledItem2 = true;
-                }, Dispatcher);
+                delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
         }
 
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -173,20 +165,111 @@ namespace WifiDemoApp_1
 
         #region Main section
 
-        //TODO: this potentiali whont be event used
-        private void NewConfiguration_OnClick(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("NOT IMPLEMENTED YET", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
         private void OpenConfiguration_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("NOT IMPLEMENTED YET", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            // Displays an OpenFileDialog so the user can select a Cursor.  
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = ".xml Files|*.xml",
+                Title = "Select a .xml config File",
+                Multiselect = false,
+                RestoreDirectory = true
+            };
+
+            // Show the Dialog.  
+            // If the user clicked OK in the dialog and  
+            // a .CUR file was selected, open it.  
+            if (openFileDialog.ShowDialog() != true)
+                return;
+
+            //Get the path of specified file
+            var filePath = openFileDialog.FileName;
+
+            try
+            {
+                using (TextReader reader = new StreamReader(filePath))
+                {
+                    var serializer = new XmlSerializer(typeof(HotspotData));
+                    var hotspotData = (HotspotData) serializer.Deserialize(reader);
+                    if (ValidateHotspotData(hotspotData) == ValidationResult.Valid)
+                    {
+                        WirelessPasswordInput.Text = hotspotData.Password;
+                        NetworkNameInput.Text = hotspotData.Name;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"wifi name and password in '{filePath}' are invalid!", "ERROR",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        ///     Validate deserialized Hotspot Data
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
+        private static ValidationResult ValidateHotspotData(HotspotData test)
+        {
+            if (string.IsNullOrEmpty(test.Name) || string.IsNullOrEmpty(test.Password))
+                return ValidationResult.Invalid;
+
+            return ValidationResult.Valid;
         }
 
         private void SaveConfiguration_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("NOT IMPLEMENTED YET", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (string.IsNullOrEmpty(WirelessPasswordInput?.Text) || string.IsNullOrEmpty(NetworkNameInput?.Text))
+            {
+                MessageBox.Show("Wifi name and password missing!", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                var xsSubmit = new XmlSerializer(typeof(HotspotData));
+                var subReq = new HotspotData
+                {
+                    Name = NetworkNameInput.Text,
+                    Password = WirelessPasswordInput.Text
+                };
+
+                using (var stringWriter = new StringWriter())
+                {
+                    try
+                    {
+                        using (var writer = XmlWriter.Create(stringWriter))
+                        {
+                            xsSubmit.Serialize(writer, subReq);
+
+                            var save = new SaveFileDialog
+                            {
+                                FileName = "HotspotData.xml",
+                                Filter = "Xml File | *.xml"
+                            };
+
+                            if (save.ShowDialog() != true)
+                                return;
+
+                            using (var streamWriter = new StreamWriter(save.FileName))
+                            {
+                                streamWriter.Write(stringWriter);
+                            }
+                        }
+
+                        MessageBox.Show("Configuration saved successfully!", "Information", MessageBoxButton.OK,
+                            MessageBoxImage.Information);
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
         }
 
         private void Exit_OnClick(object sender, RoutedEventArgs e)
@@ -200,9 +283,9 @@ namespace WifiDemoApp_1
 
         private void AboutAuthor_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: napraviti ovo kao custom window gdje je sve lijepo poredano
-            MessageBox.Show("This section is about author", "About Author", MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            if (MessageBox.Show("Author: Ivan Zagar  \nCheckout my GitHub link ?", "About me", MessageBoxButton.YesNo,
+                    MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                Process.Start("https://github.com/Thranduil77/");
         }
 
         private void AboutProgram_OnClick(object sender, RoutedEventArgs e)
