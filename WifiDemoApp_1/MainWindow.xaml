@@ -33,7 +33,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            
+
             <MenuItem Header="_Network" FontSize="16" Height="25">
                 <MenuItem Header="_Open network connections" Click="OpenNetworkConnections_OnClick">
                     <MenuItem.Icon>
@@ -117,9 +117,10 @@
                 </ScrollViewer>
 
             </Grid>
-            <TextBlock x:Name="DateTimeTextBlock" HorizontalAlignment="Left" Margin="107,344,0,0" TextWrapping="Wrap" 
-                       VerticalAlignment="Top" Height="55" Width="124" Background="White" FontWeight="Bold" FontSize="20" 
-                       ToolTip="Display current time" TextAlignment="Center"/>
+            <TextBlock x:Name="DateTimeTextBlock" HorizontalAlignment="Left" Margin="107,344,0,0" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Height="55" Width="124" Background="White" FontWeight="Bold"
+                       FontSize="20"
+                       ToolTip="Display current time" TextAlignment="Center" />
 
 
         </Grid>

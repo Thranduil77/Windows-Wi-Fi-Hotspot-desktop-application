@@ -30,9 +30,6 @@ namespace WifiDemoApp_1
         {
             var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal,
                 delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
-
-            //Text = "{Binding Source={x:Static sys:DateTime.Now},
-            //StringFormat = '{}{0:dd-MMM-yyyy hh:mm:ss}'}"
         }
 
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -147,6 +144,17 @@ namespace WifiDemoApp_1
         {
         }
 
+        #region Network section
+
+        private void OpenNetworkConnections_OnClick(object sender, RoutedEventArgs e)
+        {
+            var startInfo = new ProcessStartInfo("NCPA.cpl") {UseShellExecute = true};
+
+            Process.Start(startInfo);
+        }
+
+        #endregion
+
         #region Main section
 
         private void NewConfiguration_OnClick(object sender, RoutedEventArgs e)
@@ -167,17 +175,6 @@ namespace WifiDemoApp_1
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
-        }
-
-        #endregion
-
-        #region Network section
-
-        private void OpenNetworkConnections_OnClick(object sender, RoutedEventArgs e)
-        {
-            var startInfo = new ProcessStartInfo("NCPA.cpl") {UseShellExecute = true};
-
-            Process.Start(startInfo);
         }
 
         #endregion

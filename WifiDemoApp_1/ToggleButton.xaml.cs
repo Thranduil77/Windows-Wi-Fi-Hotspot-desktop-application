@@ -14,12 +14,12 @@ namespace WifiDemoApp_1
     /// </summary>
     public partial class ToggleButton : UserControl
     {
-        private bool _toogledBoolean;
         private readonly Thickness LeftSide = new Thickness(-39, 0, 0, 0);
 
         private readonly SolidColorBrush Off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
         private readonly SolidColorBrush On = new SolidColorBrush(Color.FromRgb(130, 190, 125));
         private readonly Thickness RightSide = new Thickness(0, 0, -31, 0);
+        private bool _toogledBoolean;
 
         /// <summary>
         ///     Init method - poziva se prilikom kreiranja user controle
