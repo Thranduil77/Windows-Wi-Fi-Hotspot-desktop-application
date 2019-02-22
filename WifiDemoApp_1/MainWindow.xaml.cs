@@ -26,10 +26,26 @@ namespace WifiDemoApp_1
             CreateDispatcherTimer();
         }
 
+        private bool _iseditenabled = false;
+        public bool IsEnabledItem2
+        {
+            get
+            {
+                return _iseditenabled;
+                //return !string.IsNullOrEmpty(WirelessPasswordInput?.Text) &&
+                //       !string.IsNullOrEmpty(NetworkNameInput?.Text);
+            }
+            set { _iseditenabled = value; }
+        }
+
         private void CreateDispatcherTimer()
         {
             var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal,
-                delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
+                delegate
+                {
+                    DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss");
+                    IsEnabledItem2 = true;
+                }, Dispatcher);
         }
 
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -157,6 +173,7 @@ namespace WifiDemoApp_1
 
         #region Main section
 
+        //TODO: this potentiali whont be event used
         private void NewConfiguration_OnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("NOT IMPLEMENTED YET", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
