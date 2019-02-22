@@ -1,4 +1,4 @@
-# WPF_Windows_Hotspot_apk.sln
+# WPF Windows Hotspot WPF application
 Windows hotspot desktop application developed using WPF
 
 ## Usage
