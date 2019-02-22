@@ -1,0 +1,128 @@
+﻿<Window x:Class="WifiDemoApp_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WifiDemoApp_1"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="Wifi Hotspot" Height="500" Width="800" Icon="Images/Wifi_icon.ico">
+
+    <DockPanel Background="#FF19338D">
+        <Menu DockPanel.Dock="Top" Height="25">
+            <MenuItem Header="_Main" FontSize="16" Height="25">
+                <MenuItem Header="_New configuration" Click="NewConfiguration_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/New_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Open configuration" Click="OpenConfiguration_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Open_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Save configuration" Click="SaveConfiguration_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Save_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Exit" Click="Exit_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Exit_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="_Network" FontSize="16" Height="25">
+                <MenuItem Header="_Open network connections" Click="OpenNetworkConnections_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/OpenNetworkConnections.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem Header="_About" FontSize="16" Height="25">
+                <MenuItem Header="_About program" Click="AboutProgram_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/About_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_About author" Click="AboutAuthor_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="/Images/Author_icon.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+        </Menu>
+
+        <Grid Margin="0,4,0,16" Width="785">
+            <local:ToggleButton x:Name="SwitchUserControlButton"
+                                Margin="263,75,5,0"
+                                MouseLeftButtonDown="ToggleButton_MouseLeftButtonDown" Height="89"
+                                VerticalAlignment="Top" />
+            <Ellipse x:Name="LightEllipse" Fill="#FFA2A2A2"
+                     Margin="662,86,53,0" Height="70" VerticalAlignment="Top" Width="70" />
+            <TextBlock x:Name="DisplayTextBlock" Margin="606,18,52,0"
+                       TextWrapping="Wrap" Background="#FF930D0D"
+                       TextAlignment="Center" Height="44" VerticalAlignment="Top" RenderTransformOrigin="0.032,0.25" />
+
+            <Grid Margin="20,20,470,20" Width="150" Height="200">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="MainRectangle" RadiusY="8" RadiusX="8" Fill="#FF0766D8" OpacityMask="Black"
+                           Stroke="#FF1933FD" StrokeThickness="2" Grid.RowSpan="5" />
+
+                <Grid Row="0">
+                    <TextBlock x:Name="NetworkNameTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap"
+                               VerticalAlignment="Bottom"
+                               Text="Network Name:" FontWeight="Bold" Margin="0,10,0,0" />
+                </Grid>
+
+                <Grid Row="1">
+                    <TextBox x:Name="NetworkNameInput" HorizontalAlignment="Center" Width="120" TextWrapping="Wrap"
+                             VerticalAlignment="Top"
+                             Margin="0,10,0,0" BorderBrush="#FF042076" Background="#FFBDBDBD" />
+                </Grid>
+
+                <Grid Row="3">
+                    <TextBlock x:Name="WirellessPasswordTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap"
+                               VerticalAlignment="Stretch"
+                               Text="Wireless Password:" FontWeight="Bold" Margin="0,10,0,0" />
+                </Grid>
+                <Grid Row="4">
+                    <TextBox x:Name="WirelessPasswordInput" HorizontalAlignment="Center" Width="120"
+                             TextWrapping="Wrap" VerticalAlignment="Top"
+                             BorderBrush="#FF042076" Background="#FFBDBDBD"
+                             TextChanged="WirelessPasswordInput_TextChanged" />
+                </Grid>
+            </Grid>
+
+
+            <TextBlock HorizontalAlignment="Left" Margin="332,190,0,0" TextWrapping="Wrap" Text="Output of a program:"
+                       VerticalAlignment="Top" FontWeight="Bold" />
+
+            <Grid Margin="300,220,0,0">
+                <ScrollViewer HorizontalAlignment="Right" Margin="0,0,20,0">
+                    <TextBlock x:Name="OutputOfaProgram" Width="400" Margin="0,0,20,0" TextWrapping="Wrap"
+                               Background="White" />
+                </ScrollViewer>
+
+            </Grid>
+            <TextBlock x:Name="DateTimeTextBlock" HorizontalAlignment="Left" Margin="107,344,0,0" TextWrapping="Wrap" 
+                       VerticalAlignment="Top" Height="55" Width="124" Background="White" FontWeight="Bold" FontSize="20" 
+                       ToolTip="Display current time" TextAlignment="Center"/>
+
+
+        </Grid>
+
+    </DockPanel>
+</Window>
