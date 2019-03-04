@@ -8,10 +8,8 @@ User must grand administrative privileges because program uses commands that mus
 User can set their custom settings for wifi-hotspot name and password. 
 User can save that configuration to a file and reload it for later use.
 
-TODO: Password are stored encrypted on local drive.
-
 Regular Wifi-Hotspot application demand connected using wired connections but this simple application leverages use of wifi also.
 
 ## Authors
 
-* **Ivan Žagar** - [scripts](https://github.com/Thranduil77/scripts/tree/master/WPF_Windows_Hotspot_apk)
+* **Ivan Žagar** - [Windows Hotspot APK](https://github.com/Thranduil77/WPF_Windows_Hotspot_apk/tree/master)
