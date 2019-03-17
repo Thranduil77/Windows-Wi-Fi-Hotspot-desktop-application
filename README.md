@@ -1,5 +1,5 @@
-# WPF Windows Hotspot WPF application
-Windows hotspot desktop application developed using WPF
+# Windows Hotspot desktop application
+Windows Hotspot desktop application developed using WPF
 
 ## Usage
 Desktop application that turns any Windows PC with internet connectivity (wifi or wired) to hotspot.
