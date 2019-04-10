@@ -1,25 +1,24 @@
-﻿#region Using
-
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-
-#endregion
-
-namespace WifiDemoApp_1
+﻿namespace WifiDemoApp_1
 {
+    #region Using
+
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
+    #endregion
+
     /// <summary>
     ///     Interaction logic for ToggleButton.xaml
     /// </summary>
     public partial class ToggleButton : UserControl
     {
-        private readonly Thickness LeftSide = new Thickness(-39, 0, 0, 0);
-
-        private readonly SolidColorBrush Off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
-        private readonly SolidColorBrush On = new SolidColorBrush(Color.FromRgb(130, 190, 125));
-        private readonly Thickness RightSide = new Thickness(0, 0, -31, 0);
-        private bool _toogledBoolean;
+        private readonly Thickness _leftSide = new Thickness(-39, 0, 0, 0);
+        private readonly SolidColorBrush _off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
+        private readonly SolidColorBrush _on = new SolidColorBrush(Color.FromRgb(130, 190, 125));
+        private readonly Thickness _rightSide = new Thickness(0, 0, -31, 0);
+        private bool _toggledBoolean;
 
         /// <summary>
         ///     Init method - poziva se prilikom kreiranja user controle
@@ -28,27 +27,27 @@ namespace WifiDemoApp_1
         {
             InitializeComponent();
 
-            Back.Fill = Off;
-            ToogledBooleanPublic = false;
-            Dot.Margin = LeftSide;
+            Back.Fill = _off;
+            ToggledBooleanPublic = false;
+            Dot.Margin = _leftSide;
         }
 
-        public bool ToogledBooleanPublic
+        public bool ToggledBooleanPublic
         {
-            get => _toogledBoolean;
+            get { return _toggledBoolean; }
+
             set
             {
-                if (_toogledBoolean != value)
+                if (_toggledBoolean != value)
                 {
-                    _toogledBoolean = value;
+                    _toggledBoolean = value;
 
                     if (value == false)
                     {
-                        Back.Fill = Off;
-                        Dot.Margin = LeftSide;
+                        Back.Fill = _off;
+                        Dot.Margin = _leftSide;
                     }
                 }
-                ;
             }
         }
 
@@ -69,17 +68,17 @@ namespace WifiDemoApp_1
 
         private void UserClicked()
         {
-            if (ToogledBooleanPublic == false)
+            if (ToggledBooleanPublic == false)
             {
-                Back.Fill = On;
-                ToogledBooleanPublic = true;
-                Dot.Margin = RightSide;
+                Back.Fill = _on;
+                ToggledBooleanPublic = true;
+                Dot.Margin = _rightSide;
             }
             else
             {
-                Back.Fill = Off;
-                ToogledBooleanPublic = false;
-                Dot.Margin = LeftSide;
+                Back.Fill = _off;
+                ToggledBooleanPublic = false;
+                Dot.Margin = _leftSide;
             }
         }
     }

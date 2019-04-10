@@ -1,25 +1,21 @@
-﻿#region Using
-
-#endregion
-
-#region Using
-
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
-using System.Xml;
-using System.Xml.Serialization;
-using Microsoft.Win32;
-
-#endregion
-
-namespace WifiDemoApp_1
+﻿namespace WifiDemoApp_1
 {
+    #region Using
+
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Threading;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using Microsoft.Win32;
+
+    #endregion
+
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
@@ -37,7 +33,7 @@ namespace WifiDemoApp_1
         private void CreateDispatcherTimer()
         {
             var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal,
-                delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
+                                            delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
         }
 
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -45,9 +41,10 @@ namespace WifiDemoApp_1
             OutputOfaProgram.Text = "";
 
 
-            if (SwitchUserControlButton.ToogledBooleanPublic == false)
+            if (SwitchUserControlButton.ToggledBooleanPublic == false)
             {
-                RunCmd("netsh wlan stop hostednetwork");
+                //TODO: commented for now
+                //RunCmd("netsh wlan stop hostednetwork");
                 LightEllipse.Fill = _off;
                 DisplayTextBlock.Text = "OFF";
             }
@@ -57,15 +54,16 @@ namespace WifiDemoApp_1
                     string.IsNullOrEmpty(NetworkNameInput.Text))
                 {
                     Console.WriteLine(Properties.Resources.Invalid);
-                    SwitchUserControlButton.ToogledBooleanPublic = false;
+                    SwitchUserControlButton.ToggledBooleanPublic = false;
                     return;
                 }
 
                 LightEllipse.Fill = _on;
                 DisplayTextBlock.Text = "ON";
 
-                RunCmd("netsh wlan set hostednetwork mode=allow ssid=Ivan_Hotspot key=izagar564");
-                RunCmd("netsh wlan start hostednetwork");
+                //TODO: commented for now
+                //RunCmd("netsh wlan set hostednetwork mode=allow ssid=Ivan_Hotspot key=izagar564");
+                //RunCmd("netsh wlan start hostednetwork");
             }
         }
 
@@ -74,44 +72,38 @@ namespace WifiDemoApp_1
         /// </summary>
         private void RunCmd(string command)
         {
-            //netsh wlan set hostednetwork mode = allow ssid = Ivan_Hotspot key = izagar564
-            //netsh wlan start hostednetwork
-
             // Start the child process.
             var process = new Process
-            {
-                StartInfo =
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    FileName = "cmd.exe",
-                    Arguments = $"/c call {command}",
-                    CreateNoWindow = true,
-                    WindowStyle = ProcessWindowStyle.Hidden
-                }
-            };
+                          {
+                              StartInfo =
+                              {
+                                  UseShellExecute = false,
+                                  RedirectStandardOutput = true,
+                                  RedirectStandardError = true,
+                                  FileName = "cmd.exe",
+                                  Arguments = $"/c call {command}",
+                                  CreateNoWindow = true,
+                                  WindowStyle = ProcessWindowStyle.Hidden
+                              }
+                          };
+
             // Redirect the output stream of the child process.
             // Do not create the black window.
-
             process.OutputDataReceived += OutputHandler;
             process.ErrorDataReceived += OutputHandler;
-
             process.Start();
+
             // Do not wait for the child process to exit before
             // reading to the end of its redirected stream.
             // p.WaitForExit();
             // Read the output stream first and then wait.
-
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
 
-            //odjavi se s pretplata nakon što si sve pročitao
             process.OutputDataReceived -= OutputHandler;
             process.ErrorDataReceived -= OutputHandler;
         }
-
 
         private void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
         {
@@ -125,27 +117,7 @@ namespace WifiDemoApp_1
             //    that too much in a short time span you're effectively blocking the 
             //    UI thread.
             Dispatcher.BeginInvoke(new Action(() => { OutputOfaProgram.Text += outLine.Data + "\n"; }),
-                DispatcherPriority.ApplicationIdle);
-        }
-
-        private void Test_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            // e.CanExecute = (txtEditor != null) && (txtEditor.SelectionLength > 0);
-        }
-
-        private void Test_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            //txtEditor.Cut();
-        }
-
-        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
+                                   DispatcherPriority.ApplicationIdle);
         }
 
         private void WirelessPasswordInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -156,7 +128,7 @@ namespace WifiDemoApp_1
 
         private void OpenNetworkConnections_OnClick(object sender, RoutedEventArgs e)
         {
-            var startInfo = new ProcessStartInfo("NCPA.cpl") {UseShellExecute = true};
+            var startInfo = new ProcessStartInfo("NCPA.cpl") { UseShellExecute = true };
 
             Process.Start(startInfo);
         }
@@ -169,12 +141,12 @@ namespace WifiDemoApp_1
         {
             // Displays an OpenFileDialog so the user can select a Cursor.  
             var openFileDialog = new OpenFileDialog
-            {
-                Filter = ".xml Files|*.xml",
-                Title = "Select a .xml config File",
-                Multiselect = false,
-                RestoreDirectory = true
-            };
+                                 {
+                                     Filter = ".xml Files|*.xml",
+                                     Title = "Select a .xml config File",
+                                     Multiselect = false,
+                                     RestoreDirectory = true
+                                 };
 
             // Show the Dialog.  
             // If the user clicked OK in the dialog and  
@@ -199,8 +171,8 @@ namespace WifiDemoApp_1
                     else
                     {
                         MessageBox.Show($"wifi name and password in '{filePath}' are invalid!", "ERROR",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error);
+                                        MessageBoxButton.OK,
+                                        MessageBoxImage.Error);
                     }
                 }
             }
@@ -233,10 +205,10 @@ namespace WifiDemoApp_1
             {
                 var xsSubmit = new XmlSerializer(typeof(HotspotData));
                 var subReq = new HotspotData
-                {
-                    Name = NetworkNameInput.Text,
-                    Password = WirelessPasswordInput.Text
-                };
+                             {
+                                 Name = NetworkNameInput.Text,
+                                 Password = WirelessPasswordInput.Text
+                             };
 
                 using (var stringWriter = new StringWriter())
                 {
@@ -247,10 +219,12 @@ namespace WifiDemoApp_1
                             xsSubmit.Serialize(writer, subReq);
 
                             var save = new SaveFileDialog
-                            {
-                                FileName = "HotspotData.xml",
-                                Filter = "Xml File | *.xml"
-                            };
+                                       {
+                                           FileName = "HotspotData.xml",
+                                           Filter = "Xml File | *.xml",
+                                           InitialDirectory = "D:\\",
+                                           RestoreDirectory = true,
+                                       };
 
                             if (save.ShowDialog() != true)
                                 return;
@@ -262,7 +236,7 @@ namespace WifiDemoApp_1
                         }
 
                         MessageBox.Show("Configuration saved successfully!", "Information", MessageBoxButton.OK,
-                            MessageBoxImage.Information);
+                                        MessageBoxImage.Information);
                     }
                     catch (Exception exception)
                     {
@@ -284,7 +258,7 @@ namespace WifiDemoApp_1
         private void AboutAuthor_OnClick(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Author: Ivan Zagar  \nCheckout my GitHub link ?", "About me", MessageBoxButton.YesNo,
-                    MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                                MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
                 Process.Start("https://github.com/Thranduil77/");
         }
 
@@ -292,7 +266,7 @@ namespace WifiDemoApp_1
         {
             //TODO: napraviti ovo kao next next tutorial
             MessageBox.Show("This section is about how to use this program", "About Program", MessageBoxButton.OK,
-                MessageBoxImage.Information);
+                            MessageBoxImage.Information);
         }
 
         #endregion

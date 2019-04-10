@@ -1,11 +1,11 @@
-﻿#region Using
-
-using System.Windows;
-
-#endregion
-
-namespace WifiDemoApp_1
+﻿namespace WifiDemoApp_1
 {
+    #region Using
+
+    using System.Windows;
+
+    #endregion
+
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>
