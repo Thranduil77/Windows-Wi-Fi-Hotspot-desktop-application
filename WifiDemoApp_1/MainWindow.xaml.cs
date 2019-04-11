@@ -64,7 +64,7 @@ namespace WifiDemoApp_1
                 LightEllipse.Fill = _on;
                 DisplayTextBlock.Text = "ON";
 
-                RunCmd("netsh wlan set hostednetwork mode=allow ssid=Ivan_Hotspot key=izagar564");
+                RunCmd($"netsh wlan set hostednetwork mode=allow ssid={NetworkNameInput.Text} key={WirelessPasswordInput.Text}");
                 RunCmd("netsh wlan start hostednetwork");
             }
         }
@@ -74,6 +74,7 @@ namespace WifiDemoApp_1
         /// </summary>
         private void RunCmd(string command)
         {
+            OutputOfaProgram.Text = "";
             //netsh wlan set hostednetwork mode = allow ssid = Ivan_Hotspot key = izagar564
             //netsh wlan start hostednetwork
 
@@ -288,13 +289,20 @@ namespace WifiDemoApp_1
                 Process.Start("https://github.com/Thranduil77/");
         }
 
-        private void AboutProgram_OnClick(object sender, RoutedEventArgs e)
+        private void HowToUse_OnClick(object sender, RoutedEventArgs e)
         {
-            //TODO: napraviti ovo kao next next tutorial
-            MessageBox.Show("This section is about how to use this program", "About Program", MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            //MessageBox.Show("This section is about how to use this program", "About Program", MessageBoxButton.OK,
+            //    MessageBoxImage.Information);
+            var dialog = new HowToUseProgramWindow();
+            dialog.Show();
+
         }
 
         #endregion
+
+        private void Button_CheckConnectedDevicesClick(object sender, RoutedEventArgs e)
+        {
+            RunCmd("netsh wlan show hostednetwork");
+        }
     }
 }
