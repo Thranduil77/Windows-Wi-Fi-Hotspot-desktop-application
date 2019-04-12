@@ -39,6 +39,12 @@
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             OutputOfaProgram.Text = "";
+            var hotspotData = new HotspotData
+            {
+                Name = NetworkNameInput.Text,
+                Password = WirelessPasswordInput.Text
+            };
+            
 
 
             if (SwitchUserControlButton.ToggledBooleanPublic == false)
@@ -50,10 +56,8 @@
             }
             else
             {
-                if (string.IsNullOrEmpty(WirelessPasswordInput.Text) ||
-                    string.IsNullOrEmpty(NetworkNameInput.Text))
+                if (ValidateHotspotData(hotspotData) == ValidationResult.Invalid)
                 {
-                    Console.WriteLine(Properties.Resources.Invalid);
                     SwitchUserControlButton.ToggledBooleanPublic = false;
                     return;
                 }
@@ -190,7 +194,13 @@
         private static ValidationResult ValidateHotspotData(HotspotData test)
         {
             if (string.IsNullOrEmpty(test.Name) || string.IsNullOrEmpty(test.Password))
+            {
+                var outputMessage = $"Hotspot data is {ValidationResult.Invalid}";
+                Console.WriteLine(outputMessage);
+                MessageBox.Show(outputMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 return ValidationResult.Invalid;
+            }
 
             return ValidationResult.Valid;
         }
@@ -257,7 +267,7 @@
 
         private void AboutAuthor_OnClick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Author: Ivan Zagar  \nCheckout my GitHub link ?", "About me", MessageBoxButton.YesNo,
+            if (MessageBox.Show("Author: Ivan Zagar, Junior Software Engineer \nCheckout my GitHub link ?", "About me", MessageBoxButton.YesNo,
                                 MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
                 Process.Start("https://github.com/Thranduil77/");
         }
