@@ -21,8 +21,8 @@
     /// </summary>
     public partial class MainWindow
     {
-        private readonly SolidColorBrush _off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
-        private readonly SolidColorBrush _on = new SolidColorBrush(Color.FromRgb(130, 190, 125));
+        //private readonly SolidColorBrush _off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
+        //private readonly SolidColorBrush _on = new SolidColorBrush(Color.FromRgb(130, 190, 125));
 
         public MainWindow()
         {
@@ -40,41 +40,61 @@
         {
             OutputOfaProgram.Text = "";
             var hotspotData = new HotspotData
-            {
-                Name = NetworkNameInput.Text,
-                Password = WirelessPasswordInput.Text
-            };
-            
+                              {
+                                  Name = NetworkNameInput.Text,
+                                  Password = WirelessPasswordInput.Text
+                              };
 
-
-            if (SwitchUserControlButton.ToggledBooleanPublic == false)
+            if (SwitchUserControlButton.ToggledBooleanPublic)
             {
-                //TODO: commented for now
-                //RunCmd("netsh wlan stop hostednetwork");
-                LightEllipse.Fill = _off;
-                DisplayTextBlock.Text = "OFF";
+                TurnWiFiOff();
+                return;
             }
-            else
-            {
-                if (ValidateHotspotData(hotspotData) == ValidationResult.Invalid)
-                {
-                    SwitchUserControlButton.ToggledBooleanPublic = false;
-                    return;
-                }
 
-                LightEllipse.Fill = _on;
-                DisplayTextBlock.Text = "ON";
+            if (ValidateHotspotData(hotspotData) == ValidationResult.Invalid) return;
 
-                RunCmd($"netsh wlan set hostednetwork mode=allow ssid={NetworkNameInput.Text} key={WirelessPasswordInput.Text}");
-                RunCmd("netsh wlan start hostednetwork");
-            }
+            TurnWifiOn();
+
+            var startHotspotCmdWithParams = string.Format(WifiDemoApp_1.Resources.StartHotspotWithParameters, WirelessPasswordInput.Text,
+                                                          NetworkNameInput.Text);
+            RunCmd(startHotspotCmdWithParams);
+            RunCmd(WifiDemoApp_1.Resources.StopHotspot);
         }
 
         /// <summary>
-        ///     Metoda koja pokrece windows wifi
+        ///     Logic for turning Wifi on
+        /// </summary>
+        private void TurnWifiOn()
+        {
+            LightEllipse.Fill = SwitchUserControlButton.On;
+            DisplayTextBlock.Text = "ON";
+            SwitchUserControlButton.ToggledBooleanPublic = true;
+            SwitchUserControlButton.Back.Fill = SwitchUserControlButton.On;
+            SwitchUserControlButton.ToggledBooleanPublic = true;
+            SwitchUserControlButton.Dot.Margin = SwitchUserControlButton.RightSide;
+        }
+
+        /// <summary>
+        ///     Logic for turning Wifi off
+        /// </summary>
+        private void TurnWiFiOff()
+        {
+            LightEllipse.Fill = SwitchUserControlButton.Off;
+            DisplayTextBlock.Text = "OFF";
+            SwitchUserControlButton.ToggledBooleanPublic = false;
+            SwitchUserControlButton.Back.Fill = SwitchUserControlButton.Off;
+            SwitchUserControlButton.ToggledBooleanPublic = false;
+            SwitchUserControlButton.Dot.Margin = SwitchUserControlButton.LeftSide;
+        }
+
+        /// <summary>
+        ///     Generic method for running cmd commands
         /// </summary>
         private void RunCmd(string command)
         {
+            //clear output text
+            OutputOfaProgram.Text = "";
+
             // Start the child process.
             var process = new Process
                           {
@@ -123,10 +143,6 @@
                                    DispatcherPriority.ApplicationIdle);
         }
 
-        private void WirelessPasswordInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
         #region Network section
 
         private void OpenNetworkConnections_OnClick(object sender, RoutedEventArgs e)
@@ -137,6 +153,11 @@
         }
 
         #endregion
+
+        private void Button_CheckConnectedDevicesClick(object sender, RoutedEventArgs e)
+        {
+            RunCmd(WifiDemoApp_1.Resources.ShowHotspots);
+        }
 
         #region Main section
 
@@ -232,7 +253,7 @@
                                            FileName = "HotspotData.xml",
                                            Filter = "Xml File | *.xml",
                                            InitialDirectory = "D:\\",
-                                           RestoreDirectory = true,
+                                           RestoreDirectory = true
                                        };
 
                             if (save.ShowDialog() != true)
@@ -279,9 +300,42 @@
 
         #endregion
 
-        private void Button_CheckConnectedDevicesClick(object sender, RoutedEventArgs e)
+        private void WirelessNetworkNameInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            RunCmd("netsh wlan show hostednetwork");
+            var textBox = (TextBox) sender;
+            if (textBox.Text.Length <= GlobalParameters.MinNetworkNameLength)
+            {
+                //add a tooltip for text box
+                textBox.ToolTip = string.Format(WifiDemoApp_1.Resources.NetworkNameLengthInvalid, textBox.Text.Length);
+                NetworkNameInput.BorderThickness = new Thickness(2);
+                NetworkNameInput.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                //reset defaults
+                NetworkNameInput.BorderThickness = new Thickness(1);
+                NetworkNameInput.BorderBrush = Brushes.Black;
+                textBox.ToolTip = null;
+            }
+        }
+
+        private void WirelessPasswordInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox) sender;
+            if (textBox.Text.Length <= GlobalParameters.MinPasswordLength || textBox.Text.Length >= GlobalParameters.MaxPasswordLength)
+            {
+                //add a tooltip for text box
+                textBox.ToolTip = string.Format(WifiDemoApp_1.Resources.PasswordLengthInvalid, textBox.Text.Length);
+                WirelessPasswordInput.BorderThickness = new Thickness(2);
+                WirelessPasswordInput.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                //reset defaults
+                WirelessPasswordInput.BorderThickness = new Thickness(1);
+                WirelessPasswordInput.BorderBrush = Brushes.Black;
+                textBox.ToolTip = null;
+            }
         }
     }
 }

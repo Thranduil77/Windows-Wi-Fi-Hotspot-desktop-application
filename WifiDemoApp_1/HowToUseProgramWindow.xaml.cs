@@ -1,34 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace WifiDemoApp_1
+﻿namespace WifiDemoApp_1
 {
+    #region Using
+
+    using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Windows;
+    using System.Windows.Media.Imaging;
+
+    #endregion
 
     /// <summary>
     /// Interaction logic for HowToUseProgramWindow.xaml
     /// </summary>
     public partial class HowToUseProgramWindow : Window
     {
-        private List<BitmapImage> _bitmapImages;
         private int _index;
 
-        public List<BitmapImage> BitmapImages
-        {
-            get { return _bitmapImages; }
-            set { _bitmapImages = value; }
-        }
+        public List<BitmapImage> BitmapImages { get; set; }
 
         public int Index
         {
@@ -55,7 +44,7 @@ namespace WifiDemoApp_1
         private void SetImage()
         {
             FinalImage.Source = BitmapImages[Index];
-            ImageNumber.Text = $"{Index+1} / {BitmapImages.Count}";
+            ImageNumber.Text = $"{Index + 1} / {BitmapImages.Count}";
             ImageTextBlock.Text = Path.GetFileName(BitmapImages[Index].UriSource.AbsolutePath);
         }
 
@@ -74,7 +63,7 @@ namespace WifiDemoApp_1
 
         private void Button_RightClick(object sender, RoutedEventArgs e)
         {
-            if(Index +1 >= BitmapImages.Count)
+            if (Index + 1 >= BitmapImages.Count)
                 return;
 
             Index++;
@@ -83,7 +72,7 @@ namespace WifiDemoApp_1
 
         private void Button_LeftClick(object sender, RoutedEventArgs e)
         {
-            if(Index <= 0)
+            if (Index <= 0)
                 return;
 
             Index--;
@@ -98,7 +87,7 @@ namespace WifiDemoApp_1
 
         private void Button_EndClick(object sender, RoutedEventArgs e)
         {
-            Index = BitmapImages.Count-1;
+            Index = BitmapImages.Count - 1;
             SetImage();
         }
     }

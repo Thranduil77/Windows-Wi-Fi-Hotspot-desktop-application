@@ -14,11 +14,13 @@
     /// </summary>
     public partial class ToggleButton : UserControl
     {
-        private readonly Thickness _leftSide = new Thickness(-39, 0, 0, 0);
-        private readonly SolidColorBrush _off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
-        private readonly SolidColorBrush _on = new SolidColorBrush(Color.FromRgb(130, 190, 125));
-        private readonly Thickness _rightSide = new Thickness(0, 0, -31, 0);
         private bool _toggledBoolean;
+
+        public readonly SolidColorBrush Off = new SolidColorBrush(Color.FromRgb(160, 160, 160));
+        public readonly SolidColorBrush On = new SolidColorBrush(Color.FromRgb(130, 190, 125));
+
+        public readonly Thickness LeftSide = new Thickness(-39, 0, 0, 0);
+        public readonly Thickness RightSide = new Thickness(0, 0, -31, 0);
 
         /// <summary>
         ///     Init method - poziva se prilikom kreiranja user controle
@@ -27,9 +29,9 @@
         {
             InitializeComponent();
 
-            Back.Fill = _off;
+            Back.Fill = Off;
             ToggledBooleanPublic = false;
-            Dot.Margin = _leftSide;
+            Dot.Margin = LeftSide;
         }
 
         public bool ToggledBooleanPublic
@@ -44,8 +46,8 @@
 
                     if (value == false)
                     {
-                        Back.Fill = _off;
-                        Dot.Margin = _leftSide;
+                        Back.Fill = Off;
+                        Dot.Margin = LeftSide;
                     }
                 }
             }
@@ -68,18 +70,18 @@
 
         private void UserClicked()
         {
-            if (ToggledBooleanPublic == false)
-            {
-                Back.Fill = _on;
-                ToggledBooleanPublic = true;
-                Dot.Margin = _rightSide;
-            }
-            else
-            {
-                Back.Fill = _off;
-                ToggledBooleanPublic = false;
-                Dot.Margin = _leftSide;
-            }
+            //if (ToggledBooleanPublic == false)
+            //{
+            //    Back.Fill = _on;
+            //    ToggledBooleanPublic = true;
+            //    Dot.Margin = _rightSide;
+            //}
+            //else
+            //{
+            //    Back.Fill = _off;
+            //    ToggledBooleanPublic = false;
+            //    Dot.Margin = _leftSide;
+            //}
         }
     }
 }

@@ -117,8 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Invalid" xml:space="preserve">
-    <value>Invalid</value>
-    <comment>Used in WifiDemoApp_1</comment>
+  <data name="NetworkNameLengthInvalid" xml:space="preserve">
+    <value>The value for option "network name" is invalid. It should be more than 5 characters long. Current network name length is: {0}</value>
+    <comment>Alert if current network name length is invalid</comment>
+  </data>
+  <data name="PasswordLengthInvalid" xml:space="preserve">
+    <value>The value for option "password" is invalid. It should be 8 to 63 characters long. Current password length is: {0}</value>
+    <comment>Alert if current password length is invalid</comment>
+  </data>
+  <data name="ShowHotspots" xml:space="preserve">
+    <value>netsh wlan show hostednetwork</value>
+    <comment>Command used for showing Wifi Network adapter details</comment>
+  </data>
+  <data name="StartHotspotWithParameters" xml:space="preserve">
+    <value>netsh wlan set hostednetwork mode=allow ssid={0} key={1}</value>
+    <comment>Command used for starting WiFi Hotspot</comment>
+  </data>
+  <data name="StopHotspot" xml:space="preserve">
+    <value>netsh wlan start hostednetwork</value>
+    <comment>Command used for stoping WiFi Hotspot</comment>
   </data>
 </root>

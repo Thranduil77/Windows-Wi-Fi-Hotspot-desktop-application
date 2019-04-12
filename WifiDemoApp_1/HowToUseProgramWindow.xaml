@@ -9,7 +9,7 @@
         Loaded="Window_Loaded">
     <Grid HorizontalAlignment="Center" Width="792" Height="419" VerticalAlignment="Stretch">
         <!--<Image  Height="254" Margin="218,66,212,0" VerticalAlignment="Top" Source="Images/akira.jpg"/>-->
-        <Border BorderThickness="5" BorderBrush="Black" Margin="103,0,134,165" Height="220" >
+        <Border BorderThickness="5" BorderBrush="Black" Margin="103,0,134,165" Height="220">
             <Image x:Name="FinalImage" />
         </Border>
         <Button Content="Left" HorizontalAlignment="Left" Margin="297,353,0,0" VerticalAlignment="Top" Width="74" Click="Button_LeftClick" />
