@@ -117,7 +117,8 @@
                        VerticalAlignment="Top" Height="55" Width="124" Background="White" FontWeight="Bold"
                        FontSize="20"
                        ToolTip="Display current time" TextAlignment="Center" />
-            <Button Content="Check Connections" HorizontalAlignment="Left" Margin="116,351,0,0" VerticalAlignment="Top" Width="116" Click="Button_CheckConnectedDevicesClick" Height="38"/>
+            <Button Content="Check Connections" HorizontalAlignment="Left" Margin="116,351,0,0" VerticalAlignment="Top"
+                    Width="116" Click="Button_CheckConnectedDevicesClick" Height="38" />
 
 
         </Grid>

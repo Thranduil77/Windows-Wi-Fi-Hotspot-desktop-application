@@ -1,8 +1,8 @@
-﻿namespace WifiDemoApp_1
+﻿using System.Xml.Serialization;
+
+namespace WifiDemoApp_1
 {
     #region Using
-
-    using System.Xml.Serialization;
 
     #endregion
 

@@ -1,8 +1,8 @@
-﻿namespace WifiDemoApp_1
+﻿using System.Windows;
+
+namespace WifiDemoApp_1
 {
     #region Using
-
-    using System.Windows;
 
     #endregion
 

@@ -1,18 +1,18 @@
-﻿namespace WifiDemoApp_1
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Xml;
+using System.Xml.Serialization;
+using Microsoft.Win32;
+
+namespace WifiDemoApp_1
 {
     #region Using
-
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using Microsoft.Win32;
 
     #endregion
 
@@ -33,7 +33,7 @@
         private void CreateDispatcherTimer()
         {
             var timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal,
-                                            delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
+                delegate { DateTimeTextBlock.Text = DateTime.Now.ToString("dd-MMM-yyyy hh:mm:ss"); }, Dispatcher);
         }
 
         private void ToggleButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -44,13 +44,10 @@
                 Name = NetworkNameInput.Text,
                 Password = WirelessPasswordInput.Text
             };
-            
-
 
             if (SwitchUserControlButton.ToggledBooleanPublic == false)
             {
-                //TODO: commented for now
-                //RunCmd("netsh wlan stop hostednetwork");
+                RunCmd("netsh wlan stop hostednetwork");
                 LightEllipse.Fill = _off;
                 DisplayTextBlock.Text = "OFF";
             }
@@ -65,7 +62,8 @@
                 LightEllipse.Fill = _on;
                 DisplayTextBlock.Text = "ON";
 
-                RunCmd($"netsh wlan set hostednetwork mode=allow ssid={NetworkNameInput.Text} key={WirelessPasswordInput.Text}");
+                RunCmd(
+                    $"netsh wlan set hostednetwork mode=allow ssid={NetworkNameInput.Text} key={WirelessPasswordInput.Text}");
                 RunCmd("netsh wlan start hostednetwork");
             }
         }
@@ -77,18 +75,18 @@
         {
             // Start the child process.
             var process = new Process
-                          {
-                              StartInfo =
-                              {
-                                  UseShellExecute = false,
-                                  RedirectStandardOutput = true,
-                                  RedirectStandardError = true,
-                                  FileName = "cmd.exe",
-                                  Arguments = $"/c call {command}",
-                                  CreateNoWindow = true,
-                                  WindowStyle = ProcessWindowStyle.Hidden
-                              }
-                          };
+            {
+                StartInfo =
+                {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    FileName = "cmd.exe",
+                    Arguments = $"/c call {command}",
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden
+                }
+            };
 
             // Redirect the output stream of the child process.
             // Do not create the black window.
@@ -120,7 +118,7 @@
             //    that too much in a short time span you're effectively blocking the 
             //    UI thread.
             Dispatcher.BeginInvoke(new Action(() => { OutputOfaProgram.Text += outLine.Data + "\n"; }),
-                                   DispatcherPriority.ApplicationIdle);
+                DispatcherPriority.ApplicationIdle);
         }
 
         private void WirelessPasswordInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -131,12 +129,17 @@
 
         private void OpenNetworkConnections_OnClick(object sender, RoutedEventArgs e)
         {
-            var startInfo = new ProcessStartInfo("NCPA.cpl") { UseShellExecute = true };
+            var startInfo = new ProcessStartInfo("NCPA.cpl") {UseShellExecute = true};
 
             Process.Start(startInfo);
         }
 
         #endregion
+
+        private void Button_CheckConnectedDevicesClick(object sender, RoutedEventArgs e)
+        {
+            RunCmd("netsh wlan show hostednetwork");
+        }
 
         #region Main section
 
@@ -144,12 +147,12 @@
         {
             // Displays an OpenFileDialog so the user can select a Cursor.  
             var openFileDialog = new OpenFileDialog
-                                 {
-                                     Filter = ".xml Files|*.xml",
-                                     Title = "Select a .xml config File",
-                                     Multiselect = false,
-                                     RestoreDirectory = true
-                                 };
+            {
+                Filter = ".xml Files|*.xml",
+                Title = "Select a .xml config File",
+                Multiselect = false,
+                RestoreDirectory = true
+            };
 
             // Show the Dialog.  
             // If the user clicked OK in the dialog and  
@@ -174,8 +177,8 @@
                     else
                     {
                         MessageBox.Show($"wifi name and password in '{filePath}' are invalid!", "ERROR",
-                                        MessageBoxButton.OK,
-                                        MessageBoxImage.Error);
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
                     }
                 }
             }
@@ -214,10 +217,10 @@
             {
                 var xsSubmit = new XmlSerializer(typeof(HotspotData));
                 var subReq = new HotspotData
-                             {
-                                 Name = NetworkNameInput.Text,
-                                 Password = WirelessPasswordInput.Text
-                             };
+                {
+                    Name = NetworkNameInput.Text,
+                    Password = WirelessPasswordInput.Text
+                };
 
                 using (var stringWriter = new StringWriter())
                 {
@@ -228,12 +231,12 @@
                             xsSubmit.Serialize(writer, subReq);
 
                             var save = new SaveFileDialog
-                                       {
-                                           FileName = "HotspotData.xml",
-                                           Filter = "Xml File | *.xml",
-                                           InitialDirectory = "D:\\",
-                                           RestoreDirectory = true,
-                                       };
+                            {
+                                FileName = "HotspotData.xml",
+                                Filter = "Xml File | *.xml",
+                                InitialDirectory = "D:\\",
+                                RestoreDirectory = true
+                            };
 
                             if (save.ShowDialog() != true)
                                 return;
@@ -245,7 +248,7 @@
                         }
 
                         MessageBox.Show("Configuration saved successfully!", "Information", MessageBoxButton.OK,
-                                        MessageBoxImage.Information);
+                            MessageBoxImage.Information);
                     }
                     catch (Exception exception)
                     {
@@ -266,22 +269,18 @@
 
         private void AboutAuthor_OnClick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Author: Ivan Zagar, Junior Software Engineer \nCheckout my GitHub link ?", "About me", MessageBoxButton.YesNo,
-                                MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Author: Ivan Zagar, Junior Software Engineer \nCheckout my GitHub link ?", "About me",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
                 Process.Start("https://github.com/Thranduil77/");
         }
 
         private void HowToUse_OnClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new HowToUseProgramWindow();
+            var dialog = new HowToUseProgramWindow {Owner = this};
             dialog.Show();
         }
 
         #endregion
-
-        private void Button_CheckConnectedDevicesClick(object sender, RoutedEventArgs e)
-        {
-            RunCmd("netsh wlan show hostednetwork");
-        }
     }
 }

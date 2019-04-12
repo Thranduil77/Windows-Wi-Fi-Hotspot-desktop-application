@@ -9,16 +9,22 @@
         Loaded="Window_Loaded">
     <Grid HorizontalAlignment="Center" Width="792" Height="419" VerticalAlignment="Stretch">
         <!--<Image  Height="254" Margin="218,66,212,0" VerticalAlignment="Top" Source="Images/akira.jpg"/>-->
-        <Border BorderThickness="5" BorderBrush="Black" Margin="103,0,134,165" Height="220" >
+        <Border BorderThickness="5" BorderBrush="Black" Margin="103,0,134,165" Height="220">
             <Image x:Name="FinalImage" />
         </Border>
-        <Button Content="Left" HorizontalAlignment="Left" Margin="297,353,0,0" VerticalAlignment="Top" Width="74" Click="Button_LeftClick" />
-        <Button Content="Right" HorizontalAlignment="Left" Margin="438,353,0,0" VerticalAlignment="Top" Width="75" Click="Button_RightClick" />
-        <Button Content="Start" HorizontalAlignment="Left" Margin="157,353,0,0" VerticalAlignment="Top" Width="75" Click="Button_StartClick" />
-        <Button Content="End" HorizontalAlignment="Left" Margin="592,353,0,0" VerticalAlignment="Top" Width="75" Click="Button_EndClick" />
-        <TextBlock x:Name="ImageTextBlock" TextAlignment="Center" Background="PowderBlue" HorizontalAlignment="Left" Margin="157,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+        <Button Content="Left" HorizontalAlignment="Left" Margin="297,353,0,0" VerticalAlignment="Top" Width="74"
+                Click="Button_LeftClick" />
+        <Button Content="Right" HorizontalAlignment="Left" Margin="438,353,0,0" VerticalAlignment="Top" Width="75"
+                Click="Button_RightClick" />
+        <Button Content="Start" HorizontalAlignment="Left" Margin="157,353,0,0" VerticalAlignment="Top" Width="75"
+                Click="Button_StartClick" />
+        <Button Content="End" HorizontalAlignment="Left" Margin="592,353,0,0" VerticalAlignment="Top" Width="75"
+                Click="Button_EndClick" />
+        <TextBlock x:Name="ImageTextBlock" TextAlignment="Center" Background="PowderBlue" HorizontalAlignment="Left"
+                   Margin="157,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
                    Height="49" Width="501" />
-        <TextBlock x:Name="ImageNumber" TextAlignment="Center" Background="PowderBlue" HorizontalAlignment="Left" Margin="85,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49"
+        <TextBlock x:Name="ImageNumber" TextAlignment="Center" Background="PowderBlue" HorizontalAlignment="Left"
+                   Margin="85,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49"
                    Width="48" />
     </Grid>
 </Window>
