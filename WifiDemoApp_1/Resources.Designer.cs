@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WifiDemoApp_1.Properties {
+namespace WifiDemoApp_1 {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace WifiDemoApp_1.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace WifiDemoApp_1.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WifiDemoApp_1.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WifiDemoApp_1.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,47 @@ namespace WifiDemoApp_1.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid.
+        ///   Looks up a localized string similar to The value for option &quot;network name&quot; is invalid. It should be more than 5 characters long. Current network name length is: {0}.
         /// </summary>
-        internal static string Invalid {
+        internal static string NetworkNameLengthInvalid {
             get {
-                return ResourceManager.GetString("Invalid", resourceCulture);
+                return ResourceManager.GetString("NetworkNameLengthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value for option &quot;password&quot; is invalid. It should be 8 to 63 characters long. Current password length is: {0}.
+        /// </summary>
+        internal static string PasswordLengthInvalid {
+            get {
+                return ResourceManager.GetString("PasswordLengthInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to netsh wlan show hostednetwork.
+        /// </summary>
+        internal static string ShowHotspots {
+            get {
+                return ResourceManager.GetString("ShowHotspots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to netsh wlan set hostednetwork mode=allow ssid={0} key={1}.
+        /// </summary>
+        internal static string StartHotspotWithParameters {
+            get {
+                return ResourceManager.GetString("StartHotspotWithParameters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to netsh wlan start hostednetwork.
+        /// </summary>
+        internal static string StopHotspot {
+            get {
+                return ResourceManager.GetString("StopHotspot", resourceCulture);
             }
         }
     }

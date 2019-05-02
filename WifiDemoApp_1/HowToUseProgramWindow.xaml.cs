@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows;
-using System.Windows.Media.Imaging;
-
 namespace WifiDemoApp_1
 {
+    #region Using
+
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Media.Imaging;
+
+    #endregion
+
     /// <summary>
     ///     Interaction logic for HowToUseProgramWindow.xaml
     /// </summary>
